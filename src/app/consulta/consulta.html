@@ -1,11 +1,8 @@
 <h1>Loja</h1>
 @for(prod of produtos(); track prod.id) {
     <div>
-        <p><img [src]="prod.foto"></p>
         <p>{{prod.nome}}</p>
-        <p>{{prod.marca}}</p>
-        <p>{{prod.descricao}}</p>
         <p>R$ {{prod.preco}}</p>
-        <p>Estoque {{prod.quantidade}}</p>
+        <button (click)="adicionarAoCarrinho(prod)">Adicionar ao Carrinho</button>
     </div>
 }

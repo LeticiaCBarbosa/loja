@@ -8,3 +8,8 @@ export type Produto = {
    quantidade: number
 }
 
+export type Itens ={
+    id: number,
+    produto: Produto,
+    quant: number
+}
