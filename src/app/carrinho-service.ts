@@ -5,6 +5,7 @@ import { Itens } from './produto';
 export class CarrinhoService {
     protected produtos = signal<Itens[] | undefined>(undefined);
     protected numeroDeProdutos = signal<number>(0);
+    protected total = signal<number>(0);
 
     contarProdutos() {
         const atual = this.produtos();
@@ -26,6 +27,8 @@ export class CarrinhoService {
         } else {
             this.produtos.set([item]);
         }
+        this.contarProdutos();
+        this.atualizarTotal();
     }
 
     aumentar(id: number) {
@@ -38,6 +41,8 @@ export class CarrinhoService {
                 return item;
             });
             this.produtos.set(novaLista);
+            this.atualizarTotal();
+            this.contarProdutos();
         }
     }
 
@@ -51,6 +56,8 @@ export class CarrinhoService {
                 return item;
             });
             this.produtos.set(novaLista);
+            this.atualizarTotal();
+            this.contarProdutos();
         }
     }
 
@@ -59,6 +66,8 @@ export class CarrinhoService {
         if (atual) {
             const novaLista = atual.filter((item: Itens) => item.id !== id);
             this.produtos.set(novaLista);
+            this.atualizarTotal();
+            this.contarProdutos();
         }
     }
 
@@ -77,5 +86,14 @@ export class CarrinhoService {
         }
 
         return 0;
+    }
+
+    atualizarTotal() {
+        const total = this.calcularTotal();
+        this.total.set(total);
+    }
+
+    obterTotalSinal() {
+        return this.total;
     }
 }

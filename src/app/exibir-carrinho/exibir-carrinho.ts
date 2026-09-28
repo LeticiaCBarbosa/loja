@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CarrinhoService } from '../carrinho-service';
 
 @Component({
@@ -10,8 +10,9 @@ import { CarrinhoService } from '../carrinho-service';
 export class ExibirCarrinho {
   readonly #carrinhoService = inject(CarrinhoService);
   protected carrinho = this.#carrinhoService.obterProdutos();
-  protected total = this.#carrinhoService.calcularTotal();
+  protected total = this.#carrinhoService.obterTotalSinal();
   protected numeroDeProdutos = this.#carrinhoService.obterNumeroDeProdutos();
+  protected exibirCarrinho = signal(false);
 
 aumentar(produtoId: number) {
     this.#carrinhoService.aumentar(produtoId);
@@ -23,6 +24,7 @@ diminuir(produtoId: number) {
 
 retirar(produtoId: number) {
     this.#carrinhoService.retirar(produtoId);
+
 }
 
 obterProdutos() {
@@ -32,5 +34,9 @@ obterProdutos() {
 calcularTotal() {
     return this.#carrinhoService.calcularTotal();
 } 
+
+exibirCompras() {
+    this.exibirCarrinho.set(!this.exibirCarrinho());
+}
 
 }

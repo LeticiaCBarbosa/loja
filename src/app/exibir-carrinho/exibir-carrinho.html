@@ -1,2 +1,21 @@
-<h1>Carrinho de Compras</h1>
-<p>Número de Produtos: {{numeroDeProdutos()}}</p>
+@if (exibirCarrinho() === false) {
+    <button (click)="exibirCompras()">Exibir Carrinho</button>
+    <p> Produtos {{ numeroDeProdutos() }} </p>
+} @else {
+    @if(carrinho() === undefined) {
+        <p> Carrinho Vazio </p>
+    } @else if(carrinho()?.length === 0) {
+        <p> Carrinho Vazio </p>
+    } @else {
+        @for(item of carrinho(); track item.produto.id) {
+            <div>
+                <p> {{ item.produto.nome }} </p>
+                <p> {{ item.produto.preco | currency: 'BRL' }} </p>
+                <p> Quantidade: {{ item.quant }} </p>
+                <button (click)="aumentar(item.produto.id)">+</button>
+                <button (click)="diminuir(item.produto.id)">-</button>
+                <button (click)="retirar(item.produto.id)">Remover</button>
+            </div>
+        }
+    }
+}
