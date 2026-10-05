@@ -10,12 +10,13 @@
         @for(item of carrinho(); track item.produto.id) {
             <div>
                 <p> {{ item.produto.nome }} </p>
-                <p> {{ item.produto.preco | currency: 'BRL' }} </p>
+                <p> {{ item.produto.preco }} </p>
                 <p> Quantidade: {{ item.quant }} </p>
                 <button (click)="aumentar(item.produto.id)">+</button>
                 <button (click)="diminuir(item.produto.id)">-</button>
                 <button (click)="retirar(item.produto.id)">Remover</button>
             </div>
         }
+        <p> Total: {{ total() }} </p>
     }
 }
